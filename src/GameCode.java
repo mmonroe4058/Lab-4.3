@@ -3,12 +3,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.util.Timer;
  
 public class GameCode extends Application {
-    public static void main(String[] args) {
+   
+	private static int width = 50;
+	private static int length = 50;
+	
+	public static void main(String[] args) {
         launch(args);
     }
     
@@ -23,15 +28,29 @@ public class GameCode extends Application {
             public void handle(ActionEvent event) {
             	
             	btn.setText("Click me!");
-            	
+            	movePosition(btn);
             }
         });
         
-        StackPane root = new StackPane();
-        btn.setLayoutX(150);
-        btn.setLayoutY(120);
+        Pane root = new Pane();
         root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 800, 250));
+        primaryStage.setScene(new Scene(root, width, length));
         primaryStage.show();
+        //System.out.println(num);
+    }
+    
+    public static void movePosition(Button btn)
+	{
+    	int a = (int) (width - width*0.2);
+    	int b = (int) (length - length*0.3);
+    	
+		btn.setLayoutX(randomNum(0,a));
+		btn.setLayoutY(randomNum(0,b));
+	}
+    
+    public static int randomNum (int min, int max)
+    {
+       int range = (max - min) + 1;     
+       return (int)(Math.random() * range) + min;
     }
 }

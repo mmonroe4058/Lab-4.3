@@ -12,32 +12,23 @@ public class BackEnd
 {
 	private final int seconds = 10;
 	
-	public static void initializeGame()
+	public static void initializeTimer(Button btn)
 	{
 		Timer x = new Timer();
 		
+		x.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+				 btn.setVisible(false);
+			  }
+			}, 10*1000);
 	}
 	
-	public static void movePosition(Button btn)
-	{
-		btn.setTranslateX((int)Math.random()*200);
-		btn.setTranslateY((int)Math.random()*200);
-	}
 	
 	public static void timer()
 	{
-		TimerTask task = new TimerTask();
 		
-		 @Override
-	        public void run() { 
-	            if (seconds < MAX_SECONDS) {
-	                System.out.println("Seconds = " + seconds);
-	                seconds++;
-	            } else {
-	                // stop the timer
-	                cancel();
-	            }
-	        }
+		
 	}
 
 }

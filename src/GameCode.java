@@ -7,11 +7,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.util.Timer;
+import java.applet.Applet;
  
 public class GameCode extends Application {
    
 	private static int width = 50;
 	private static int length = 50;
+	private static int score = 0;
 	
 	public static void main(String[] args) {
         launch(args);
@@ -29,6 +31,7 @@ public class GameCode extends Application {
             	
             	btn.setText("Click me!");
             	movePosition(btn);
+            	score++;
             }
         });
         
@@ -36,6 +39,9 @@ public class GameCode extends Application {
         root.getChildren().add(btn);
         primaryStage.setScene(new Scene(root, width, length));
         primaryStage.show();
+ 
+        
+        BackEnd.initializeTimer(btn);
         //System.out.println(num);
     }
     

@@ -3,17 +3,27 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.applet.Applet;
+import java.awt.Label;
+import java.awt.TextField;
+import java.io.File;
+
+import javafx.scene.text.*;
  
 public class GameCode extends Application {
    
-	private static int width = 50;
-	private static int length = 50;
-	private static int score = 0;
+	private static int width = 200;
+	private static int length = 200;
+
 	
 	public static void main(String[] args) {
         launch(args);
@@ -21,29 +31,72 @@ public class GameCode extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Chase the Button!");
+    	primaryStage.setTitle("Chase the Button!");
+    	
+    	BackEnd newData = new BackEnd();
+    	File file = new File("a.csv");
+    	newData.CSVUtilities(file);
+    	
+    	newData.printData();
+    	
+        
+        Text t = new Text();
+        t.setFont(new Font(15));
+        t.setText("Score:" + newData.score);
+        t.setX(width-width*0.4);
+        t.setY(length-length*0.9);
+        
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("");
+        dialog.setHeaderText("Welcome to Chase the Button! After entering your name the game will begin.");
+        dialog.setContentText("Please enter your name:");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent())
+        {
+            newData.name = result.get();
+        }
+
+        
         Button btn = new Button();
         btn.setText("Start");
         btn.setOnAction(new EventHandler<ActionEvent>() {
+        	
  
             @Override
             public void handle(ActionEvent event) {
             	
             	btn.setText("Click me!");
             	movePosition(btn);
-            	score++;
+            	newData.score++;
+            	t.setText("Score: " + newData.score);
             }
         });
         
         Pane root = new Pane();
         root.getChildren().add(btn);
+        root.getChildren().add(t);
+        //root.getChildren().add(dialog);
         primaryStage.setScene(new Scene(root, width, length));
         primaryStage.show();
  
         
-        BackEnd.initializeTimer(btn);
+        initializeTimer(btn);
+        newData.printData();
+        //writeCSV(file);
         //System.out.println(num);
     }
+    
+	public static void initializeTimer(Button btn)
+	{
+		Timer x = new Timer();
+		
+		x.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+				 btn.setVisible(false);
+			  }
+			}, 10*1000);
+	}
     
     public static void movePosition(Button btn)
 	{

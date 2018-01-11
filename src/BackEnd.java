@@ -86,9 +86,9 @@ public class BackEnd
         */
         
         
-        sb.append(name);
+        sb.append(this.name);
         sb.append(',');
-        sb.append(score);
+        sb.append(this.score);
         sb.append('\n');
         
         pw.write(sb.toString());
@@ -113,4 +113,6 @@ public class BackEnd
 			
 		}
 	}
+
+	
 }

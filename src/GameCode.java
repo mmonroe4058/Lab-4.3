@@ -24,6 +24,8 @@ public class GameCode extends Application {
 	private static int width = 200;
 	private static int length = 200;
 
+	static BackEnd newData = new BackEnd();
+	static File file = new File("a.csv");
 	
 	public static void main(String[] args) {
         launch(args);
@@ -32,9 +34,6 @@ public class GameCode extends Application {
     @Override
     public void start(Stage primaryStage) {
     	primaryStage.setTitle("Chase the Button!");
-    	
-    	BackEnd newData = new BackEnd();
-    	File file = new File("a.csv");
     	newData.CSVUtilities(file);
     	
     	newData.printData();
@@ -58,14 +57,13 @@ public class GameCode extends Application {
 
         
         Button btn = new Button();
-        btn.setText("Start");
+        btn.setText("Click me!");
         btn.setOnAction(new EventHandler<ActionEvent>() {
         	
  
             @Override
             public void handle(ActionEvent event) {
             	
-            	btn.setText("Click me!");
             	movePosition(btn);
             	newData.score++;
             	t.setText("Score: " + newData.score);
@@ -81,7 +79,7 @@ public class GameCode extends Application {
  
         
         initializeTimer(btn);
-        newData.printData();
+        //newData.printData();
         //writeCSV(file);
         //System.out.println(num);
     }
@@ -94,6 +92,8 @@ public class GameCode extends Application {
 			  @Override
 			  public void run() {
 				 btn.setVisible(false);
+				 newData.writeCSV(file);
+				 newData.printData();
 			  }
 			}, 10*1000);
 	}
